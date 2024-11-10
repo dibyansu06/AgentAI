@@ -1,73 +1,75 @@
-# Project Title
+ # Automated Entity Information Retrieval and Extraction from CSV file
 
 ## Project Description
 
-This project is a web application designed to streamline data handling, web search, and natural language processing (NLP) tasks using a simple and intuitive dashboard. Users can upload CSV files or link Google Sheets, select columns of interest, and perform web searches using a custom query format. The results from the search are then processed by a language model (Groq) to extract meaningful insights. This application is ideal for users looking to automate the extraction of relevant data from both structured (CSV/Sheets) and unstructured (web) sources.
-
-**Technologies Involved:**
-- **Dashboard/UI:** Streamlit
-- **Data Handling:** pandas for CSV files; Google Sheets API for Sheets
-- **Search API:** SerpAPI
-- **LLM API:** Groq
-- **Backend:** Python
-- **Agents:** Langchain (ChatGroq)
-
----
+This project provides a user-friendly Streamlit dashboard that allows users to search for specific information about entities by utilizing web search results from SerpAPI and language models (LLMs) via Groq API. Users can dynamically define queries with placeholders, specify a list of entities from Google Sheets or CSV, and retrieve structured information (such as email addresses, revenue, etc.) by parsing the search results with the help of an LLM. The tool is useful for data collection, information extraction, and custom search workflows.
 
 ## Setup Instructions
 
-### Prerequisites
-Ensure you have Python 3.7+ installed.
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/repository-name.git
+   cd repository-name
 
-### Installation
-1. **Clone the repository** (or download the project files).
-2. Install the dependencies by running the following command in your project directory:
+2. **Install Dependencies**
+Make sure to have Python 3.12 or higher installed. Then install required packages:
+
    ```bash
    pip3 install -r requirements.txt
    ```
-(Note: requirements.txt was generated using the command pip3 freeze > requirements.txt.)
 
-```bash
-streamlit run app.py
-```
+3. **Set Up Environment Variables**
+Create the .env file and add the following variables:
+
+- **SERP_API_KEY:** Your SerpAPI key to enable web search.
+- **GROQ_API_KEY:** Your Groq API key for using LLM-based extraction.
+
+4. **Run the Application**
+Launch the Streamlit app:
+
+   ```bash
+   streamlit run app.py
+   ```
 
 ## Usage Guide
+1. **Dashboard Overview**
 
-### **Interacting with the Dashboard**
-- **Data Upload:** You can upload data in two ways:
+After launching the application, you’ll see the following main sections:
 
-- **CSV File:** Upload a CSV file from your local machine using the Browse File button.
-Google Sheets: Use Google Sheets by logging in through OAuth2. You will need to provide the sheet ID and range when prompted.
-Select a Column: Once the data is loaded, select the primary column (entity names) using the drop-down menu.
+- Data Source Selection: Choose between uploading a CSV file or connecting to a Google Sheet to provide a list of entities.
+- Define Query: Enter your custom search query using placeholders (e.g., {}) for dynamic replacements. **Leave the curly brackets emtpy.**
+- Set Search Limit: Specify the maximum number of searches per entity to avoid excessive requests.
+- Run Search and Extract Information: Execute the search queries and run the extraction process.
 
-- **Web Search Query:**
+2. **Connecting Google Sheets**
 
-  - Enter your custom query in the format: Find the email address of {} (e.g., replace {} with the entity names from the selected column).
-  - Leave the curly brackets {} empty; the selected column values will be dynamically inserted into the query at the backend.
-- **LLM Prompt:** After receiving search results, provide a custom prompt that will guide the LLM (Groq) in extracting meaningful information from the results. The prompt will be combined with the search data to generate the final output.
+If using Google Sheets:
 
-## **API Keys and Environment Variables**
+- Ensure your Google Sheets API is enabled and properly authenticated.
+- Paste the URL of your Google Sheet, and ensure the sheet contains a column with the entities you wish to query.
+- Select the relevant column when prompted by the application.
 
-### **Required API Keys:**
-  
-**SerpAPI:** You need a SerpAPI key to perform web searches.
-**Groq API:** You need an API key for the Groq language model.
-**Google Sheets API Credentials:** You must set up the Google Sheets API from the Google Cloud Platform Console and download the credentials as a credentials.json file.
-  
-### **Environment Setup:**
-  
-**Groq API Key and SerpAPI Key:**
+3. **Setting Up Search Queries**
 
-  1. Create a .env file in your project directory.
-  2. Add the following lines to the .env file:
-```bash
-GROQ_API=<your-groq-api-key>
+- Define a query with placeholders to dynamically replace with each entity. For example, a query like “What is the annual revenue of {company}?” will replace {company} with each entity’s name.
+- Select the maximum number of searches to perform, keeping in mind API rate limits.
 
-SERPAPI=<your-serpapi-key>
-```
-  3. Use the python-dotenv library to load the environment variables from this file.
-**Google Sheets API:**
+4. **Running the Search and Extracting Data**
+- Click “Run Search” to initiate the search for each entity based on the defined query.
+- The LLM will process search results and extract the relevant information.
+- Results are displayed on the dashboard, and you can download them in a JSON file once the extraction is complete.
 
-Set up the Google Sheets API in your Google Cloud Console.
-Download the credentials.json file and place it in the main project directory.
+## API Keys and Environment Variables
+- **SERP_API_KEY:** This key is needed to fetch web search results from SerpAPI. Obtain an API key by signing up at [SerpAPI](https://serpapi.com/).
+- **GROQ_API_KEY:** This key enables text parsing and information extraction via Groq API. Register at [Groq](https://groq.com/) to get your API key.
+- **GOOGLE_SHEETS_API_CREDENTIALS:** (If using Google Sheets) To connect with Google Sheets, download and add your credentials in JSON format. Follow the Google Sheets API setup guide.
+
+## **Optional Features**
+- **Error Handling with Retries:** Automatically retries failed API requests up to 3 times with exponential backoff to manage connectivity or rate-limit issues.
+- **Custom Query Validation:** Ensures that queries contain dynamic placeholders (e.g., {company}) and validates the format.
+- **JSON Data Export:** Easily download search and extraction results in JSON format for further analysis or reporting.
+- **Adjustable Search Limits:** Set a custom limit for the number of searches per entity, which helps manage API usage and avoid rate limits.
+
+With this setup, you’re ready to run dynamic, customizable searches for multiple entities and extract targeted information effectively. Happy querying!
+
 
