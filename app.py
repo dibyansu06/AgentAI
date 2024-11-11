@@ -9,16 +9,15 @@ from streamlit_gsheets import GSheetsConnection
 from serpapi import GoogleSearch
 from GroqFunctions import create_groq_chain
 
-# Load environment variables
 load_dotenv()
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 
-# App title and data source selection
+
 st.title("Data Extraction Dashboard")
 st.write("## Select Data Source")
 data_source = st.radio("Choose your data source:", ("CSV Upload", "Google Sheets"))
 
-# Function to fetch search results using SerpAPI
+
 def fetch_search_results(query):
     params = {
         "q": query,
@@ -28,7 +27,7 @@ def fetch_search_results(query):
     search = GoogleSearch(params)
     return search.get_dict()
 
-# GSheets data extraction function using Streamlit's GSheets connection
+
 def load_google_sheet_data(gsheet_url):
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
@@ -38,7 +37,7 @@ def load_google_sheet_data(gsheet_url):
         st.error(f"Error loading data from Google Sheets: {e}")
         return None
 
-# Handle CSV upload or Google Sheets selection
+
 if data_source == "CSV Upload":
     uploaded_file = st.file_uploader("Upload a CSV file", type="csv")
     if uploaded_file is not None:
@@ -56,7 +55,7 @@ elif data_source == "Google Sheets":
             st.write(sheet_data.head())
             selected_column_gsheet = st.selectbox("Select the primary column for entity names (Google Sheets):", sheet_data.columns)
 
-# Define user input prompts for the search
+
 st.write("## Define Your Query")
 user_prompt = st.text_input("Enter your custom query with placeholders (e.g., 'Find the email address of {}')")
 
@@ -69,12 +68,13 @@ backend_prompt = st.text_area(
 st.write("## Search Limit")
 max_searches = st.number_input("Set the maximum number of searches to perform:", min_value=1, max_value=5, value=1)
 
-# Initialize Groq Chain for information extraction
+
 groq_chain = create_groq_chain()
 
 search_results = []
 extracted_data = []
-# Run search on button click
+
+
 if st.button("Run Search") and user_prompt and backend_prompt:
     entities = []
 
@@ -85,7 +85,6 @@ if st.button("Run Search") and user_prompt and backend_prompt:
     else:
         st.error("Please select a valid column for entity names.")
 
-    # Execute search and Groq Chain extraction if entities are available
     if entities is not None and len(entities) > 0:
         st.write("Running searches for each entity...")
         search_count = 0
@@ -128,10 +127,8 @@ if st.button("Run Search") and user_prompt and backend_prompt:
                 'LLM Output':data
             })
 
-        # Convert the flattened data into a DataFrame
         extracted_df = pd.DataFrame(flattened_data)
 
-        # Display the extracted data in a table
         if not extracted_df.empty:
             st.write("### Extracted Data:")
             st.dataframe(extracted_df)
