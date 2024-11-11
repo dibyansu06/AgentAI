@@ -1,0 +1,8 @@
+# Ignore environment files
+.env
+env/
+
+__pycache__/
+client_secrets.json
+extracted_info.json
+search_results.json
