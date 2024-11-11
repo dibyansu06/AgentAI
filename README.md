@@ -8,8 +8,8 @@ This project provides a user-friendly Streamlit dashboard that allows users to s
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/repository-name.git
-   cd repository-name
+   git clone https://github.com/dibyansu06/AgentAI.git
+   cd AgentAI
 
 2. **Install Dependencies**
 Make sure to have Python 3.12 or higher installed. Then install required packages:
@@ -45,13 +45,13 @@ After launching the application, you’ll see the following main sections:
 
 If using Google Sheets:
 
-- Ensure your Google Sheets API is enabled and properly authenticated.
-- Paste the URL of your Google Sheet, and ensure the sheet contains a column with the entities you wish to query.
-- Select the relevant column when prompted by the application.
+- Paste the **URL** of your Google Sheet into the application when prompted.
+- The sheet should contain a column with the entities you wish to query.
+- The application will automatically detect and prompt you to select the relevant column from the sheet that contains your entities.
 
 3. **Setting Up Search Queries**
 
-- Define a query with placeholders to dynamically replace with each entity. For example, a query like “What is the annual revenue of {company}?” will replace {company} with each entity’s name.
+- Define a query with placeholders to dynamically replace with each entity. For example, a query like “What is the annual revenue of {}?” will replace {} with each entity’s name. **Note leave the {} empty!**
 - Select the maximum number of searches to perform, keeping in mind API rate limits.
 
 4. **Running the Search and Extracting Data**
@@ -62,11 +62,10 @@ If using Google Sheets:
 ## API Keys and Environment Variables
 - **SERP_API_KEY:** This key is needed to fetch web search results from SerpAPI. Obtain an API key by signing up at [SerpAPI](https://serpapi.com/).
 - **GROQ_API_KEY:** This key enables text parsing and information extraction via Groq API. Register at [Groq](https://groq.com/) to get your API key.
-- **GOOGLE_SHEETS_API_CREDENTIALS:** (If using Google Sheets) To connect with Google Sheets, download and add your credentials in JSON format. Follow the Google Sheets API setup guide.
 
 ## **Optional Features**
 - **Error Handling with Retries:** Automatically retries failed API requests up to 3 times with exponential backoff to manage connectivity or rate-limit issues.
-- **Custom Query Validation:** Ensures that queries contain dynamic placeholders (e.g., {company}) and validates the format.
+- **Custom Query Validation:** Ensures that queries contain dynamic placeholders (e.g., {}) and validates the format.
 - **JSON Data Export:** Easily download search and extraction results in JSON format for further analysis or reporting.
 - **Adjustable Search Limits:** Set a custom limit for the number of searches per entity, which helps manage API usage and avoid rate limits.
 
