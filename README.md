@@ -69,8 +69,6 @@ If using Google Sheets:
 - **JSON Data Export:** Easily download search and extraction results in JSON format for further analysis or reporting.
 - **Adjustable Search Limits:** Set a custom limit for the number of searches per entity, which helps manage API usage and avoid rate limits.
 
-[**Loom Video Link**](https://www.loom.com/share/43db2e6792d14d2a841434542e641a53?sid=1682b8ae-d854-4cf5-8392-65eea9beabac)
-
 With this setup, you’re ready to run dynamic, customizable searches for multiple entities and extract targeted information effectively. Happy querying!
 
 
